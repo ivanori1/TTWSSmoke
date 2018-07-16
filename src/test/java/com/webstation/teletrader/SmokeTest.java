@@ -2,12 +2,15 @@ package com.webstation.teletrader;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import java.util.concurrent.TimeUnit;
 
 public class SmokeTest {
 
@@ -18,15 +21,27 @@ public class SmokeTest {
     String strPassword = "ICtrader123";
 
     //Elements
-    By login = By.id("loginUser");
-    By errorContainer = By.className("error_container_inner");
-    By eula = By.cssSelector("[for='eulaAccepted'].checkBoxLabel");
-    By autoLogin = By.cssSelector("[for='autologin'].checkBoxLabel");
+    By login = (By.id("loginUser"));
+    By errorContainer = (By.className("error_container_inner"));
+    By eula = (By.cssSelector("[for='eulaAccepted'].checkBoxLabel"));
+    By autoLogin = (By.cssSelector("[for='autologin'].checkBoxLabel"));
     By username = By.name("userName");
     By password = By.name("password");
     By logoWS = By.id("logo-ws");
     By userButton = By.id("user-button");
     By logout = By.cssSelector("[href='Logout.aspx']");
+    By title = By.className("title");
+    By headerNameDetail = By.className("header-name");
+    By currentDetail = By.cssSelector(".no-top-padding .current a");
+    //Navigation Buttons
+    By markets = By.cssSelector(".navigation-vertical [href='securities_overview.aspx']");
+    By currencies = By.cssSelector(".navigation-vertical [href='currencies_Currencies.aspx']");
+    By commodities = By.cssSelector(".navigation-vertical [href='commodities.aspx']");
+    By fixedIncome = By.cssSelector(".navigation-vertical [href='bonds_governmentyields.aspx']");
+    By futures = By.cssSelector(".navigation-vertical [href^='quickbar_Kursliste.aspx']");
+    By trumpEffect = By.cssSelector(".navigation-vertical [href='quickbar_Kursliste.aspx']");
+    By smartBackTester = By.cssSelector(".navigation-vertical [href='portfolio_backtester.aspx']");
+
 
     //Errors
     String errEula = "You have to accept the End User License Agreement in order to log in.";
@@ -40,7 +55,7 @@ public class SmokeTest {
     }
 
     public void checkAutoLogin() {
-        boolean autoLoginIsSelected =  driver.findElement(By.xpath("//*[@id='autologin']")).isSelected();
+        boolean autoLoginIsSelected = driver.findElement(By.xpath("//*[@id='autologin']")).isSelected();
         if (autoLoginIsSelected == false)
             driver.findElement(autoLogin).click();
     }
@@ -56,6 +71,7 @@ public class SmokeTest {
 
     @Test
     public void test() {
+        //1) LOGIN
         //1.0 Failed login
         //1 Test case:Open WebStation login page
         //2 Test case: Click on “Login” button
@@ -86,9 +102,23 @@ public class SmokeTest {
         driver.findElement(logout).click();
         //Test Outcome Login page should appear with empty username and password text box.
         // „EULA“ and „Stay logged in“ are selected.
-        driverWait.until(ExpectedConditions.visibilityOf(driver.findElement(login)));
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         Assert.assertTrue(driver.findElement(By.xpath("//*[@id='autologin']")).isSelected());
         Assert.assertTrue(driver.findElement(By.xpath("//*[@id='eulaAccepted']")).isSelected());
+
+        //2) NAVIGATION ICONS
+        driver.findElement(username).sendKeys(strUsername);
+        driver.findElement(password).sendKeys(strPassword);
+        driver.findElement(login).click();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        // 1.0 Navigation icon
+        //1, Click on “Currencies” navigation icon
+        driver.findElement(currencies).click();
+        //Test Outcome: „Currencies“ price page opens in right area with „Overview“ tab in focus.
+        Assert.assertEquals("currencies", driver.findElement(headerNameDetail).getText().toLowerCase());
+        Assert.assertEquals("Overview", driver.findElement(currentDetail).getText());
+
+
     }
 
 }
