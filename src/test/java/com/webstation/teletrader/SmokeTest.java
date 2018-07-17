@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
@@ -29,16 +30,28 @@ public class SmokeTest {
     By password = By.name("password");
     By logoWS = By.id("logo-ws");
     By userButton = By.id("user-button");
+    By accountSettings = By.cssSelector("[href='personal_registration.aspx']");
+
+    By resetChart = By.name("resetAllChartSettingsCheckbox");
+    By ressetAll = By.name("resetAllSettingsCheckbox");
+    By resetButton = By.id("resetAllSettingsButton");
+    By saveButton = By.cssSelector("#modalDialog [type='submit']");
     By logout = By.cssSelector("[href='Logout.aspx']");
     By title = By.className("title");
     By headerNameDetail = By.className("header-name");
     By currentDetail = By.cssSelector(".no-top-padding .current a");
+
     //Navigation Buttons
     By markets = By.cssSelector(".navigation-vertical [href='securities_overview.aspx']");
     By currencies = By.cssSelector(".navigation-vertical [href='currencies_Currencies.aspx']");
     By commodities = By.cssSelector(".navigation-vertical [href='commodities.aspx']");
     By fixedIncome = By.cssSelector(".navigation-vertical [href='bonds_governmentyields.aspx']");
+    By funds = By.cssSelector(".navigation-vertical [href='funds_topperformerOverview.aspx']");
     By futures = By.cssSelector(".navigation-vertical [href^='quickbar_Kursliste.aspx']");
+    By news = By.cssSelector("[class*='navigation'][href*='news']");
+    By calendar = By.cssSelector(".navigation-vertical [href*='company_calendar']");
+    By analyzer = By.cssSelector(".navigation-vertical [href='analyzer.aspx']");
+    By portfolio = By.cssSelector(".navigation-vertical [href='personal_portfolioDetail.aspx']");
     By trumpEffect = By.cssSelector(".navigation-vertical [href='quickbar_Kursliste.aspx']");
     By smartBackTester = By.cssSelector(".navigation-vertical [href='portfolio_backtester.aspx']");
 
@@ -58,6 +71,10 @@ public class SmokeTest {
         boolean autoLoginIsSelected = driver.findElement(By.xpath("//*[@id='autologin']")).isSelected();
         if (autoLoginIsSelected == false)
             driver.findElement(autoLogin).click();
+    }
+
+    public void waitElement() {
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @BeforeTest
@@ -102,7 +119,7 @@ public class SmokeTest {
         driver.findElement(logout).click();
         //Test Outcome Login page should appear with empty username and password text box.
         // „EULA“ and „Stay logged in“ are selected.
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        waitElement();
         Assert.assertTrue(driver.findElement(By.xpath("//*[@id='autologin']")).isSelected());
         Assert.assertTrue(driver.findElement(By.xpath("//*[@id='eulaAccepted']")).isSelected());
 
@@ -110,14 +127,56 @@ public class SmokeTest {
         driver.findElement(username).sendKeys(strUsername);
         driver.findElement(password).sendKeys(strPassword);
         driver.findElement(login).click();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
         // 1.0 Navigation icon
         //1, Click on “Currencies” navigation icon
+        driverWait.until(ExpectedConditions.elementToBeClickable(currencies));
         driver.findElement(currencies).click();
-        //Test Outcome: „Currencies“ price page opens in right area with „Overview“ tab in focus.
-        Assert.assertEquals("currencies", driver.findElement(headerNameDetail).getText().toLowerCase());
-        Assert.assertEquals("Overview", driver.findElement(currentDetail).getText());
-
+        //Test Outcome: „Currencies“ price page opens in right area with „Overview“ tab in focus.;
+        Assert.assertTrue(driver.findElement(By.cssSelector(".main-pages-header.currencies")).isDisplayed());
+        //2 Click on Markets navigation button
+        driver.findElement(markets).click();
+        //Test outcome: „Market“ tab opens in detail page
+        Assert.assertTrue(driver.findElement(By.cssSelector(".main-pages-header.markets")).isDisplayed());
+        //3 Click on “Fixed Income” navigation icon
+        driver.findElement(fixedIncome).click();
+        //Test Outcome: „Fixed Income Overview“ tab open in right area
+        Assert.assertTrue(driver.findElement(By.cssSelector(".main-pages-header.fixedIncome")).isDisplayed());
+        //4. Click on “Commodities” navigation icon
+        driver.findElement(commodities).click();
+        // Test Outcome: „Commodities“ price page opens in right area with „Overview“ tab in focus.
+        Assert.assertTrue(driver.findElement(By.cssSelector(".main-pages-header.commodities")).isDisplayed());
+        //5. Click on “Futures” navigation icon
+        driver.findElement(futures).click();
+        // Test Outcome: „Futures“ price page opens in right area with „Overview“ tab in focus.
+        Assert.assertTrue(driver.findElement(By.cssSelector(".main-pages-header.futures")).isDisplayed());
+        //6. Go to [Customize and control] >Account settings and change region to Germany. Click on “Funds” navigation icon
+        if (! driver.findElement(funds).isDisplayed()) {
+            driver.findElement(userButton).click();
+            driver.findElement(accountSettings).click();
+            WebElement regionBox = driver.findElement(By.id("regionBox"));
+            Select region = new Select(regionBox);
+            region.selectByValue("DE");
+        } else {
+            driver.findElement(funds).click();
+        }
+        //Test Outcome: „Funds Overview“ table opens in right area,
+        Assert.assertTrue(driver.getCurrentUrl().contains("funds"));
+        //7. Click on “News” navigation icon
+        driver.findElement(news).click();
+        //Test Outcome: “Latest news“ page appears in the right area.
+        Assert.assertTrue(driver.findElement(By.className("breaking-the-news-title")).isDisplayed());
+        //Click on “Calendar” navigation icon
+        driver.findElement(calendar).click();
+        //8.Test Outcome: “Current Week” tab is in focus
+        Assert.assertTrue(driver.findElement(By.cssSelector(".main-pages-header.companyCalendar")).isDisplayed());
+        //9.Click on “Analyzer” navigation icon
+        driver.findElement(analyzer).click();
+        //Test Outcome: “Current Week” tab is in focus
+        Assert.assertTrue(driver.findElement(By.cssSelector(".main-pages-header.analyzerHeader")).isDisplayed());
+        //10. Click on “Portfolio” navigation icon
+        driver.findElement(portfolio).click();
+        //Testoutcome: “Create new portfolio” appears in right area
 
     }
 
