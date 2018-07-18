@@ -31,6 +31,9 @@ public class SmokeTest {
     By logoWS = By.id("logo-ws");
     By userButton = By.id("user-button");
     By accountSettings = By.cssSelector("[href='personal_registration.aspx']");
+    By searchTab = By.id("search-tab-link");
+    By derivateSearch = By.cssSelector("[href='certificate_Search.aspx']");
+    By derivateSearchForm = By.id("derivative-search-form");
 
     By resetChart = By.name("resetAllChartSettingsCheckbox");
     By ressetAll = By.name("resetAllSettingsCheckbox");
@@ -52,9 +55,23 @@ public class SmokeTest {
     By calendar = By.cssSelector(".navigation-vertical [href*='company_calendar']");
     By analyzer = By.cssSelector(".navigation-vertical [href='analyzer.aspx']");
     By portfolio = By.cssSelector(".navigation-vertical [href='personal_portfolioDetail.aspx']");
+    By alert = By.cssSelector(".navigation-vertical [href='personal_notifications.aspx']");
+    By economicData = By.cssSelector(".navigation-vertical [href='economic_calendar.aspx']");
     By trumpEffect = By.cssSelector(".navigation-vertical [href='quickbar_Kursliste.aspx']");
     By smartBackTester = By.cssSelector(".navigation-vertical [href='portfolio_backtester.aspx']");
 
+    //Detail page headers
+    By currenciesHeader = By.cssSelector(".main-pages-header.currencies");
+    By marketsHeader = By.cssSelector(".main-pages-header.markets");
+    By fixedIncomeHeader = By.cssSelector(".main-pages-header.fixedIncome");
+    By commoditiesHeader = By.cssSelector(".main-pages-header.commodities");
+    By futuresHeader = By.cssSelector(".main-pages-header.futures");
+    By newsHeader = By.className("breaking-the-news-title");
+    By calendarHeader = By.cssSelector(".main-pages-header.companyCalendar");
+    By analyzerHeader = By.cssSelector(".main-pages-header.analyzerHeader");
+    By portfolioHeader = By.cssSelector(".main-pages-header.portfolio");
+    By alertHeader = By.cssSelector(".main-pages-header.alerts");
+    By trumpEffectHeader = By.cssSelector(".main-pages-header.trumpEfect");
 
     //Errors
     String errEula = "You have to accept the End User License Agreement in order to log in.";
@@ -133,25 +150,25 @@ public class SmokeTest {
         driverWait.until(ExpectedConditions.elementToBeClickable(currencies));
         driver.findElement(currencies).click();
         //Test Outcome: „Currencies“ price page opens in right area with „Overview“ tab in focus.;
-        Assert.assertTrue(driver.findElement(By.cssSelector(".main-pages-header.currencies")).isDisplayed());
+        Assert.assertTrue(driver.findElement(currenciesHeader).isDisplayed());
         //2 Click on Markets navigation button
         driver.findElement(markets).click();
         //Test outcome: „Market“ tab opens in detail page
-        Assert.assertTrue(driver.findElement(By.cssSelector(".main-pages-header.markets")).isDisplayed());
+        Assert.assertTrue(driver.findElement(marketsHeader).isDisplayed());
         //3 Click on “Fixed Income” navigation icon
         driver.findElement(fixedIncome).click();
         //Test Outcome: „Fixed Income Overview“ tab open in right area
-        Assert.assertTrue(driver.findElement(By.cssSelector(".main-pages-header.fixedIncome")).isDisplayed());
+        Assert.assertTrue(driver.findElement(fixedIncomeHeader).isDisplayed());
         //4. Click on “Commodities” navigation icon
         driver.findElement(commodities).click();
         // Test Outcome: „Commodities“ price page opens in right area with „Overview“ tab in focus.
-        Assert.assertTrue(driver.findElement(By.cssSelector(".main-pages-header.commodities")).isDisplayed());
+        Assert.assertTrue(driver.findElement(commoditiesHeader).isDisplayed());
         //5. Click on “Futures” navigation icon
         driver.findElement(futures).click();
         // Test Outcome: „Futures“ price page opens in right area with „Overview“ tab in focus.
-        Assert.assertTrue(driver.findElement(By.cssSelector(".main-pages-header.futures")).isDisplayed());
+        Assert.assertTrue(driver.findElement(futuresHeader).isDisplayed());
         //6. Go to [Customize and control] >Account settings and change region to Germany. Click on “Funds” navigation icon
-        if (! driver.findElement(funds).isDisplayed()) {
+        if (driver.findElements(funds).isEmpty()) {
             driver.findElement(userButton).click();
             driver.findElement(accountSettings).click();
             WebElement regionBox = driver.findElement(By.id("regionBox"));
@@ -165,19 +182,35 @@ public class SmokeTest {
         //7. Click on “News” navigation icon
         driver.findElement(news).click();
         //Test Outcome: “Latest news“ page appears in the right area.
-        Assert.assertTrue(driver.findElement(By.className("breaking-the-news-title")).isDisplayed());
+        Assert.assertTrue(driver.findElement(newsHeader).isDisplayed());
         //Click on “Calendar” navigation icon
         driver.findElement(calendar).click();
         //8.Test Outcome: “Current Week” tab is in focus
-        Assert.assertTrue(driver.findElement(By.cssSelector(".main-pages-header.companyCalendar")).isDisplayed());
+        Assert.assertTrue(driver.findElement(calendarHeader).isDisplayed());
         //9.Click on “Analyzer” navigation icon
         driver.findElement(analyzer).click();
         //Test Outcome: “Current Week” tab is in focus
-        Assert.assertTrue(driver.findElement(By.cssSelector(".main-pages-header.analyzerHeader")).isDisplayed());
+        Assert.assertTrue(driver.findElement(analyzerHeader).isDisplayed());
         //10. Click on “Portfolio” navigation icon
         driver.findElement(portfolio).click();
         //Testoutcome: “Create new portfolio” appears in right area
-
+        Assert.assertTrue(driver.findElement(portfolioHeader).isDisplayed());
+        //11. Click on “Alerts” navigation icon
+        driver.findElement(alert).click();
+        //TestOutcome: “Notifications” headline appears in right area
+        Assert.assertTrue(driver.findElement(alertHeader).isDisplayed());
+        //12. Search overview tab: Click on “Derivatives search” tab in right area
+        driver.findElement(searchTab).click();
+        driver.findElement(derivateSearch).click();
+        //Test Outcome: “Derivatives search” tab appears in right area
+        Assert.assertTrue(driver.findElement(derivateSearchForm).isDisplayed());
+        //13. Click on “Economic Data” navigation icon from (from list of additional icons)
+        driver.findElement(economicData).click();
+        //Test Outcome: “Filter Events” tab appears in right area
+        //TODO wait fix of icon current marketHeader
+        //14. Click on “Trump Effect” navigation icon
+        driver.findElement(trumpEffect).click();
+        //TestOutcome: “Trump Effect” will appear with mini graphs, news and twit wall
+        Assert.assertTrue(driver.findElement(trumpEffectHeader).isDisplayed());
     }
-
 }
