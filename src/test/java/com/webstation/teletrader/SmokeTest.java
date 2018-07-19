@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -57,8 +58,11 @@ public class SmokeTest {
     By portfolio = By.cssSelector(".navigation-vertical [href='personal_portfolioDetail.aspx']");
     By alert = By.cssSelector(".navigation-vertical [href='personal_notifications.aspx']");
     By economicData = By.cssSelector(".navigation-vertical [href='economic_calendar.aspx']");
-    By trumpEffect = By.cssSelector(".navigation-vertical [href='quickbar_Kursliste.aspx']");
+    By trumpEffect = By.cssSelector(".navigation-vertical [href='trump_effect.aspx']");
     By smartBackTester = By.cssSelector(".navigation-vertical [href='portfolio_backtester.aspx']");
+    By screener = By.cssSelector(".navigation-vertical [href='screener_overview.aspx']");
+    By etf = By.cssSelector(".navigation-vertical [href='funds_etfOverview.aspx']");
+    By realTime = By.cssSelector(".navigation-vertical [href='realtime_Indications.aspx']");
 
     //Detail page headers
     By currenciesHeader = By.cssSelector(".main-pages-header.currencies");
@@ -72,6 +76,11 @@ public class SmokeTest {
     By portfolioHeader = By.cssSelector(".main-pages-header.portfolio");
     By alertHeader = By.cssSelector(".main-pages-header.alerts");
     By trumpEffectHeader = By.cssSelector(".main-pages-header.trumpEfect");
+    By economicDataHeader = By.cssSelector(".main-pages-header.economicCalendar");
+    By backTesterHeader = By.cssSelector(".backtester-header.back-tester");
+    By screenerHeader = By.cssSelector(".main-pages-header.screenerHeader");
+    By etfHeader = By.cssSelector(".main-pages-header.etf");
+    By realTimeHeader = By.cssSelector(".main-pages-header.realtimeIn");
 
     //Errors
     String errEula = "You have to accept the End User License Agreement in order to log in.";
@@ -207,10 +216,31 @@ public class SmokeTest {
         //13. Click on “Economic Data” navigation icon from (from list of additional icons)
         driver.findElement(economicData).click();
         //Test Outcome: “Filter Events” tab appears in right area
-        //TODO wait fix of icon current marketHeader
+        Assert.assertTrue(driver.findElement(economicDataHeader).isDisplayed());
         //14. Click on “Trump Effect” navigation icon
         driver.findElement(trumpEffect).click();
         //TestOutcome: “Trump Effect” will appear with mini graphs, news and twit wall
         Assert.assertTrue(driver.findElement(trumpEffectHeader).isDisplayed());
+        //14. Click on “Trump Effect” navigation icon
+        driver.findElement(smartBackTester).click();
+        //Test Outcome: “Portfolio Bakctester” will appear.
+        Assert.assertTrue(driver.findElement(backTesterHeader).isDisplayed());
+        //16. Click on “Screener”
+        driver.findElement(screener).click();
+        //TestOutcome: Saved screener tab will appear
+        Assert.assertTrue(driver.findElement(screenerHeader).isDisplayed());
+        //17. Click on ETF navigation icon
+        driver.findElement(etf).click();
+        //Test Outcome: ETFS overview will appear
+        Assert.assertTrue(driver.findElement(etfHeader).isDisplayed());
+        //18. Click on “Real Time” icon
+        driver.findElement(realTime).click();
+        //Test Outcome: Indices with real time will appear
+        Assert.assertTrue(driver.findElement(realTimeHeader).isDisplayed());
+    }
+
+    @AfterTest
+    public void quit() {
+        driver.quit();
     }
 }
