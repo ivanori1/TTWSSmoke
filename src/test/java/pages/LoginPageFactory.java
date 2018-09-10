@@ -1,13 +1,19 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 public class LoginPageFactory {
 
     private WebDriver driver;
+    private WebDriverWait driverWait;
+
 
     @FindBy(name = "userName")
     WebElement usernamePlaceholder;
@@ -21,6 +27,14 @@ public class LoginPageFactory {
     @FindBy(className = "error_container_inner")
     WebElement errorBox;
 
+    @FindBy(xpath = "//*[@id='eulaAccepted']")
+    WebElement eulaStatus;
+
+    @FindBy(css = "[for='eulaAccepted'].checkBoxLabel")
+    WebElement checkEula;
+
+    @FindBy(id = "logo-ws")
+    WebElement logoImg;
 
     public LoginPageFactory(WebDriver driver) {
         this.driver = driver;
@@ -32,14 +46,28 @@ public class LoginPageFactory {
     }
 
     public void sendKeysUsernamePlaceholder(String usernameStr) {
+        usernamePlaceholder.clear();
         usernamePlaceholder.sendKeys(usernameStr);
     }
 
     public void sendKeysPasswordPlaceholder(String passwordStr) {
+        passwordPlaceholder.clear();
         passwordPlaceholder.sendKeys(passwordStr);
     }
 
     public void compareErrorMessage(String errorMessage) {
         assert errorBox.getText().contains(errorMessage);
+    }
+
+    public void checkEula() {
+        boolean eulaIsSelected = eulaStatus.isSelected();
+        if (eulaIsSelected == false)
+            checkEula.click();
+
+
+    }
+    public void isLogoVisible() {
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated((By) logoImg));
+        assert logoImg.isDisplayed();
     }
 }
