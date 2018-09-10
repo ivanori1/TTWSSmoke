@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HeaderPageFactory {
     WebDriver driver;
+    WebDriverWait driverWait;
 
     @FindBy(id = "logo-ws")
     WebElement logoImg;
@@ -22,8 +23,9 @@ public class HeaderPageFactory {
     @FindBy(id = "loginUser")
     WebElement loginButton;
 
-    public HeaderPageFactory(WebDriver driver) {
+    public HeaderPageFactory(WebDriver driver, WebDriverWait driverWait) {
         this.driver = driver;
+        this.driverWait = driverWait;
         PageFactory.initElements(driver, this);
     }
 

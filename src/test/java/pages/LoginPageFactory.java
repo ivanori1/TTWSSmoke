@@ -38,8 +38,9 @@ public class LoginPageFactory {
     @FindBy(id = "logo-ws")
     WebElement logoImg;
 
-    public LoginPageFactory(WebDriver driver) {
+    public LoginPageFactory(WebDriver driver, WebDriverWait driverWait) {
         this.driver = driver;
+        this.driverWait = driverWait;
         PageFactory.initElements(driver, this);
     }
 
