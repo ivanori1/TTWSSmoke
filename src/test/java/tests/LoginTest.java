@@ -12,7 +12,7 @@ public class LoginTest {
 
     @BeforeTest
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "chromedriver");
+        System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         loginPage = new LoginPageFactory(driver);
         driver.manage().window().maximize();
@@ -22,11 +22,19 @@ public class LoginTest {
     @Test
     public void test() {
 
+        //1) LOGIN
+        //1.0 Failed login
+
         loginPage.sendKeysUsernamePlaceholder("ivan.coric91");
-        loginPage.sendKeysPasswordPlaceholder("ICtrader");
+        loginPage.sendKeysPasswordPlaceholder("ICtrader123");
         loginPage.clickLoginButton();
         String errorAcceptEULA = "You have to accept the End User License Agreement in order to log in.";
         loginPage.compareErrorMessage(errorAcceptEULA);
+        //2.0	Successful login
+        loginPage.sendKeysUsernamePlaceholder("ivan.coric91");
+        loginPage.sendKeysPasswordPlaceholder("ICtrader123");
+        loginPage.checkEula();
+        loginPage.clickLoginButton();
     }
 
     @AfterTest
