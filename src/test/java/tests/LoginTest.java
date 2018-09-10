@@ -20,9 +20,8 @@ public class LoginTest {
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
         WebDriver driver = new ChromeDriver();
-        driverWait = new WebDriverWait(driver, 15);
-        loginPage = new LoginPageFactory(driver);
-        headerPage = new HeaderPageFactory(driver);
+        loginPage = new LoginPageFactory(driver, driverWait);
+        headerPage = new HeaderPageFactory(driver, driverWait);
         driver.manage().window().maximize();
         driver.get("http://webstation.teletrader.com/WebStation.aspx");
     }
@@ -43,14 +42,12 @@ public class LoginTest {
         loginPage.sendKeysPasswordPlaceholder("ICtrader123");
         loginPage.checkEula();
         loginPage.clickLoginButton();
-        driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("logo-ws")));
         headerPage.isLogoVisible();
         //3. Logout
         //1. Click on “Customize and control” menu button.
         headerPage.clickUserButton();
         //2. When pop-up appears, click on "Logout" link.
         headerPage.clickLogout();
-        driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("loginUser")));
         //Test Outcome Login page should appear with empty username and password text box.
         // „EULA“ and „Stay logged in“ are selected.
         loginPage.statusOfAutoLogin();
