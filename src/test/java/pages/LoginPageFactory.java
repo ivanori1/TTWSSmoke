@@ -7,7 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
 public class LoginPageFactory {
 
@@ -27,8 +26,11 @@ public class LoginPageFactory {
     @FindBy(className = "error_container_inner")
     WebElement errorBox;
 
+    @FindBy(xpath = "//*[@id='autologin']")
+    WebElement autoLoginCheckboxXpath;
+
     @FindBy(xpath = "//*[@id='eulaAccepted']")
-    WebElement eulaStatus;
+    WebElement eulaCheckboxXpath;
 
     @FindBy(css = "[for='eulaAccepted'].checkBoxLabel")
     WebElement checkEula;
@@ -60,14 +62,23 @@ public class LoginPageFactory {
     }
 
     public void checkEula() {
-        boolean eulaIsSelected = eulaStatus.isSelected();
-        if (eulaIsSelected == false)
+        boolean eulaIsSelected = eulaCheckboxXpath.isSelected();
+        if (!eulaIsSelected)
             checkEula.click();
 
 
     }
+
     public void isLogoVisible() {
         driverWait.until(ExpectedConditions.visibilityOfElementLocated((By) logoImg));
         assert logoImg.isDisplayed();
+    }
+
+    public void statusOfEulaCheckbox() {
+        assert eulaCheckboxXpath.isSelected();
+    }
+
+    public void statusOfAutoLogin() {
+        assert autoLoginCheckboxXpath.isSelected();
     }
 }
