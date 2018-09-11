@@ -23,13 +23,14 @@ public class HeaderPageFactory {
     @FindBy(id = "loginUser")
     WebElement loginButton;
 
-    public HeaderPageFactory(WebDriver driver, WebDriverWait driverWait) {
+    public HeaderPageFactory(WebDriver driver) {
         this.driver = driver;
-        this.driverWait = driverWait;
+        driverWait = new WebDriverWait(driver, 20);
         PageFactory.initElements(driver, this);
     }
 
     public void isLogoVisible() {
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("logo-ws")));
         assert logoImg.isDisplayed();
     }
 
