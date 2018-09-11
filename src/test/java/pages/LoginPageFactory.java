@@ -38,9 +38,9 @@ public class LoginPageFactory {
     @FindBy(id = "logo-ws")
     WebElement logoImg;
 
-    public LoginPageFactory(WebDriver driver, WebDriverWait driverWait) {
+    public LoginPageFactory(WebDriver driver) {
         this.driver = driver;
-        this.driverWait = driverWait;
+        driverWait = new WebDriverWait(driver, 20);
         PageFactory.initElements(driver, this);
     }
 
@@ -71,7 +71,7 @@ public class LoginPageFactory {
     }
 
     public void isLogoVisible() {
-        driverWait.until(ExpectedConditions.visibilityOfElementLocated((By) logoImg));
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated((By) loginButton));
         assert logoImg.isDisplayed();
     }
 
