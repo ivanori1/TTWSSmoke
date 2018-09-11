@@ -10,18 +10,21 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.HeaderPageFactory;
 import pages.LoginPageFactory;
+import pages.NavigationPageFactory;
 
 public class LoginTest {
     private LoginPageFactory loginPage;
     private HeaderPageFactory headerPage;
     private WebDriverWait driverWait;
+    private NavigationPageFactory navigationPage;
 
     @BeforeTest
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
         WebDriver driver = new ChromeDriver();
-        loginPage = new LoginPageFactory(driver, driverWait);
-        headerPage = new HeaderPageFactory(driver, driverWait);
+        loginPage = new LoginPageFactory(driver);
+        headerPage = new HeaderPageFactory(driver);
+        navigationPage = new NavigationPageFactory(driver);
         driver.manage().window().maximize();
         driver.get("http://webstation.teletrader.com/WebStation.aspx");
     }
@@ -52,7 +55,26 @@ public class LoginTest {
         // „EULA“ and „Stay logged in“ are selected.
         loginPage.statusOfAutoLogin();
         loginPage.statusOfEulaCheckbox();
-
+        //3. NAVIGATION ICONS
+        //Click Crypto page
+        loginPage.sendKeysUsernamePlaceholder("ivan.coric91");
+        loginPage.sendKeysPasswordPlaceholder("ICtrader123");
+        loginPage.clickLoginButton();
+        headerPage.isLogoVisible();
+        //1, Click on “Currencies” navigation icon
+        navigationPage.clickCurrenciesNavigation();
+        //Test Outcome: „Currencies“ price page opens in right area with „Overview“ tab in focus.;
+        navigationPage.isCurrencyHeaderVisible();
+        //2 Click on Markets navigation button
+        navigationPage.clickMarketButton();
+        //2 Click on Markets navigation button
+        navigationPage.clickMarketButton();
+        //Test outcome: „Market“ tab opens in detail page
+        navigationPage.isMarketHeaderVisible();
+        //3 Click on “Fixed Income” navigation icon
+        navigationPage.clickFixedIncome();
+        //Test Outcome: „Fixed Income Overview“ tab open in right area
+        navigationPage.isFixedIncomeHeaderVisible();
     }
 
     @AfterTest
