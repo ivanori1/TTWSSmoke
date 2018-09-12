@@ -75,6 +75,28 @@ public class LoginTest {
         navigationPage.clickFixedIncome();
         //Test Outcome: „Fixed Income Overview“ tab open in right area
         navigationPage.isFixedIncomeHeaderVisible();
+        //4. Click on “Commodities” navigation icon
+        navigationPage.clickCommoditiesButton();
+        // Test Outcome: „Commodities“ price page opens in right area with „Overview“ tab in focus.
+        navigationPage.isCommoditiesHeaderVisible();
+        //5. Click on “Futures” navigation icon
+        navigationPage.clickFuturesButton();
+        // Test Outcome: „Futures“ price page opens in right area with „Overview“ tab in focus.
+        navigationPage.isFuturesHeaderVisible();
+        //7. Click on “News” navigation icon
+        navigationPage.clickNewsButton();
+        //Test Outcome: “Latest news“ page appears in the right area.
+        navigationPage.isNewsHeaderVisible();
+        //Click on “Calendar” navigation icon
+        navigationPage.clickCalendar();
+        //8.Test Outcome: “Current Week” tab is in focus
+        navigationPage.isCalendarButtonVisible();
+        //9.Click on “Analyzer” navigation icon
+        navigationPage.clickOnAnalyzerButton();
+        //Test Outcome: “Current Week” tab is in focus
+        navigationPage.isAnalyzerHeaderVisible();
+
+
     }
 
     @AfterTest
