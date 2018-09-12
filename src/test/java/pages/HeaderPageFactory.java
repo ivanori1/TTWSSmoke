@@ -30,7 +30,7 @@ public class HeaderPageFactory {
     }
 
     public void isLogoVisible() {
-        driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("logo-ws")));
+        driverWait.until(ExpectedConditions.visibilityOf(logoImg));
         assert logoImg.isDisplayed();
     }
 

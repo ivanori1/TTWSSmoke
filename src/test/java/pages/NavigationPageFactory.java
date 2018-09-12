@@ -80,7 +80,7 @@ public class NavigationPageFactory {
     }
 
     public void isCurrencyHeaderVisible() {
-        driverWait.until(ExpectedConditions.visibilityOfElementLocated((By) currenciesHeader));
+        driverWait.until(ExpectedConditions.visibilityOf(currenciesHeader));
         assert currenciesHeader.isDisplayed();
     }
 
@@ -90,7 +90,7 @@ public class NavigationPageFactory {
 
     public void isMarketHeaderVisible() {
 
-        driverWait.until(ExpectedConditions.visibilityOfElementLocated((By) marketHeader));
+        driverWait.until(ExpectedConditions.visibilityOf(marketHeader));
         assert marketHeader.isDisplayed();
     }
 
@@ -101,7 +101,50 @@ public class NavigationPageFactory {
 
     public void isFixedIncomeHeaderVisible() {
 
-        driverWait.until(ExpectedConditions.visibilityOfElementLocated((By) fixedIncomeHeader));
+        driverWait.until(ExpectedConditions.visibilityOf(fixedIncomeHeader));
         assert fixedIncomeHeader.isDisplayed();
+    }
+
+    public void clickCommoditiesButton() {
+        commoditiesButton.click();
+    }
+
+    public void isCommoditiesHeaderVisible() {
+        driverWait.until(ExpectedConditions.visibilityOf(commoditiesHeader));
+        assert commoditiesHeader.isDisplayed();
+    }
+
+    public void clickFuturesButton() {
+        futuresButton.click();
+    }
+
+    public void isFuturesHeaderVisible() {
+        driverWait.until(ExpectedConditions.visibilityOf(fundsHeader));
+        assert fundsHeader.isDisplayed();
+    }
+
+    public void clickNewsButton() {
+        newsButton.click();
+    }
+
+    public void isNewsHeaderVisible() {
+        driverWait.until(ExpectedConditions.visibilityOf(newsHeader));
+        newsHeader.isDisplayed();
+    }
+
+    public void clickCalendar() {
+        calendarButton.click();
+    }
+
+    public void isCalendarButtonVisible() {
+        driverWait.until(ExpectedConditions.visibilityOf(calendarHeader));
+        assert calendarHeader.isDisplayed();
+    }
+    public void clickOnAnalyzerButton() {
+        analyzerButton.click();
+    }
+    public void isAnalyzerHeaderVisible() {
+        driverWait.until(ExpectedConditions.visibilityOf(analyzerHeader));
+        assert analyzerHeader.isDisplayed();
     }
 }

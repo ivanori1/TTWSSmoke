@@ -71,7 +71,7 @@ public class LoginPageFactory {
     }
 
     public void isLogoVisible() {
-        driverWait.until(ExpectedConditions.visibilityOfElementLocated((By) loginButton));
+        driverWait.until(ExpectedConditions.visibilityOf(loginButton));
         assert logoImg.isDisplayed();
     }
 
