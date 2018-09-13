@@ -67,6 +67,49 @@ public class NavigationPageFactory {
     @FindBy(css = ".main-pages-header.currencies")
     WebElement analyzerHeader;
 
+    @FindBy(css = ".navigation-vertical [data-button='po']")
+    WebElement portfolioButton;
+
+    @FindBy(css = ".main-pages-header.portfolio")
+    WebElement portfolioHeader;
+
+    @FindBy(css = ".navigation-vertical [data-button='li']")
+    WebElement alertButton;
+
+    @FindBy(css = ".main-pages-header.alerts")
+    WebElement alertHeader;
+
+    @FindBy(css = ".navigation-vertical [data-button='ec']")
+    WebElement economicDataButton;
+
+    @FindBy(css = ".main-pages-header.economicCalendar")
+    WebElement economicDataHeader;
+
+    @FindBy(css = ".navigation-vertical [data-button='te']")
+    WebElement trumpEffectButton;
+
+    @FindBy(css = ".main-pages-header.trumpEfect")
+    WebElement trumpEffectHeader;
+
+    @FindBy(css =".navigation-vertical [data-button='sc']")
+    WebElement screenerButton;
+
+    @FindBy(css =".main-pages-header.screenerHeader")
+    WebElement screenerHeader;
+
+    @FindBy(css = ".navigation-vertical [data-button='et']")
+    WebElement etfButton;
+
+    @FindBy(css = ".main-pages-header.etf")
+    WebElement etfHeader;
+
+    @FindBy(css = ".navigation-vertical [data-button='db']")
+    WebElement realTimeButton;
+
+    @FindBy(css = ".main-pages-header.realtimeIn")
+    WebElement realTimeHeader;
+
+
 
     public NavigationPageFactory(WebDriver driver) {
         this.driver = driver;
@@ -147,4 +190,26 @@ public class NavigationPageFactory {
         driverWait.until(ExpectedConditions.visibilityOf(analyzerHeader));
         assert analyzerHeader.isDisplayed();
     }
+    public void clickPortfolio() {
+        portfolioButton.click();
+    }
+    private void isPortfolioHeaderVisible() {
+        driverWait.until(ExpectedConditions.visibilityOf(portfolioHeader));
+        assert portfolioHeader.isDisplayed();
+    }
+    private void clickAlertButton() {
+        alertButton.click();
+    }
+    private void isAlertHeaderVisible() {
+        driverWait.until(ExpectedConditions.visibilityOf(alertHeader));
+        assert alertHeader.isDisplayed();
+    }
+    private void clickEconomicDataButton() {
+        economicDataButton.click();
+    }
+    private void isEconomicDataHeaderVisible() {
+        driverWait.until(ExpectedConditions.visibilityOf(economicDataHeader));
+        assert economicDataHeader.isDisplayed();
+    }
+
 }
